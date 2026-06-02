@@ -1,0 +1,8 @@
+server:
+  port: ${module.schemaRegistry.server.port:8816}
+  address: 0.0.0.0
+
+spring:
+  config:
+    import:
+      - "classpath:modules-address.yaml"
