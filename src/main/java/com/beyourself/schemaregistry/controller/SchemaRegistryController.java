@@ -28,7 +28,7 @@ import java.util.Map;
  * @since 2026-06-02
  */
 @RestController
-@RequestMapping("/api/schema-registry")
+@RequestMapping("")
 public class SchemaRegistryController {
 
     private static final Logger log = LoggerFactory.getLogger(SchemaRegistryController.class);
