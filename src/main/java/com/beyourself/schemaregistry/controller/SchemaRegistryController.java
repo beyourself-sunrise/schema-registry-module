@@ -69,6 +69,7 @@ public class SchemaRegistryController {
                     String topic = String.valueOf(entry.get("topic"));
                     String domain = String.valueOf(entry.getOrDefault("domain", ""));
                     int version = ((Number) entry.getOrDefault("version", 1)).intValue();
+                    String description = String.valueOf(entry.getOrDefault("description", ""));
 
                     // Extract base topic (strip .vN suffix)
                     ParsedTopic parsed = parseTopic(topic);
@@ -80,7 +81,7 @@ public class SchemaRegistryController {
                         item.put("baseTopic", parsed.base);
                         item.put("version", String.valueOf(version));
                         item.put("domain", domain);
-                        item.put("label", topic);
+                        item.put("label", description.isEmpty() ? topic : description);
                         latestByBase.put(parsed.base, item);
                         versionsByBase.put(parsed.base, version);
                     }
