@@ -62,6 +62,7 @@ public class SchemaRegistryController {
             List<Map<String, Object>> entries = (List<Map<String, Object>>) manifest.get("entries");
 
             Map<String, Map<String, String>> latestByBase = new LinkedHashMap<>();
+            Map<String, Integer> versionsByBase = new LinkedHashMap<>();
 
             if (entries != null) {
                 for (Map<String, Object> entry : entries) {
@@ -72,8 +73,8 @@ public class SchemaRegistryController {
                     // Extract base topic (strip .vN suffix)
                     ParsedTopic parsed = parseTopic(topic);
 
-                    Map<String, String> existing = latestByBase.get(parsed.base);
-                    if (existing == null || parsed.version > version) {
+                    Integer storedVersion = versionsByBase.get(parsed.base);
+                    if (storedVersion == null || version > storedVersion) {
                         Map<String, String> item = new LinkedHashMap<>();
                         item.put("topic", topic);
                         item.put("baseTopic", parsed.base);
@@ -81,6 +82,7 @@ public class SchemaRegistryController {
                         item.put("domain", domain);
                         item.put("label", topic);
                         latestByBase.put(parsed.base, item);
+                        versionsByBase.put(parsed.base, version);
                     }
                 }
             }
